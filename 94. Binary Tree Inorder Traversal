@@ -1,0 +1,40 @@
+/*
+Given the root of a binary tree, return the inorder traversal of its nodes' values
+
+Example 1:
+
+Input: root = [1,null,2,3]
+Output: [1,3,2]
+
+Example 2:
+
+Input: root = [1,null,2]
+Output: [1,2]
+*/
+
+class Solution {
+    
+    List<Integer> result = new ArrayList<>();
+    
+    public List<Integer> inorderTraversal(TreeNode root) {
+        
+        // Traverse the tree until the end
+            // point to curr node
+                // check if curr has left recursively, read it
+                // if left is null, read the root
+                // check if root has right recusively, read it
+
+        if(root != null){
+            if(root.left != null){
+                inorderTraversal(root.left);
+            }
+            result.add(root.val);
+            
+            if(root.right != null){
+                inorderTraversal(root.right);
+            }
+        }    
+        return result;
+        
+    }
+}
