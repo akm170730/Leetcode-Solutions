@@ -1,0 +1,30 @@
+/*
+Given a list of daily temperatures T, return a list such that, for each day in the input, tells you how many days you would have to wait until a warmer temperature. If there is no future day for which this is possible, put 0 instead.
+
+For example, given the list of temperatures T = [73, 74, 75, 71, 69, 72, 76, 73], your output should be [1, 1, 4, 2, 1, 1, 0, 0].
+Note: The length of temperatures will be in the range [1, 30000]. Each temperature will be an integer in the range [30, 100].
+*/
+
+class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        
+        Stack<Integer> stack = new Stack<>();
+        int[] ans = new int[T.length];
+        
+        // Loop to traverse reversely on input array
+        // Pre-decrement counter so that the right most element can be stored 0 in first pass
+        // as there is no element on right to it
+        for(int i=T.length-1; i>=0; --i){
+            // Check if the next front (left) element in input array is greater or equal
+            // then this can be the new greatest number (warmer) on right to store in stack
+            while(!stack.empty() && T[i]>=T[stack.peek()])
+                stack.pop();
+            
+            // Check if the stack is not empty, then subtract current index from top index in stack
+            // To get the count of days
+            ans[i] = stack.empty() ? 0 : stack.peek()-i;
+            stack.push(i);
+        }
+        return ans;
+    }
+}
