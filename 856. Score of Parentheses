@@ -1,0 +1,41 @@
+/*
+Given a balanced parentheses string S, compute the score of the string based on the following rule:
+
+() has score 1
+AB has score A + B, where A and B are balanced parentheses strings.
+(A) has score 2 * A, where A is a balanced parentheses string.
+
+Example 1:
+
+Input: "(()(()))"
+Output: 6
+*/
+
+class Solution {
+    public int scoreOfParentheses(String S) {
+        
+/*
+There will be only three scenario possible when we keep a track of closed paranthesis:
+    -> If ')' encountered, and if the next after this is ')' then multiply
+    -> If ')' encountered, and if the next after this is '(' then add
+    -> If ')' encountered, and nothing present after then add 1
+*/
+        
+        // To store the scores of every layer
+        Stack<Integer> stack = new Stack<>();
+        // To store the score of current layer
+        stack.push(0);
+        for(char c: S.toCharArray()){
+            if(c == '(') stack.push(0);
+            else {
+                // If closed element encountered, then check previous 2 scores
+                int temp1 = stack.pop();
+                int temp2 = stack.pop();
+                // If the current layer falls to be zero, set default to 1 any layer min value will be 1
+                // Add the inner layer score into outer layer adjacent scores
+                stack.push(temp2 + Math.max(2*temp1, 1));
+            }
+        }
+        return stack.pop();
+    }
+}
