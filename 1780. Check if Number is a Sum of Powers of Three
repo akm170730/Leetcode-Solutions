@@ -1,0 +1,32 @@
+/*
+Given an integer n, return true if it is possible to represent n as the sum of distinct powers of three. Otherwise, return false.
+An integer y is a power of three if there exists an integer x such that y == 3x.
+
+Example 1:
+
+Input: n = 12
+Output: true
+Explanation: 12 = 31 + 32
+*/
+
+class Solution {
+    public boolean checkPowersOfThree(int n) {
+        // Check if the ternary representation of number contains 2, then it will be false
+        return helper(n) != 2 ? true : false;
+    }
+    
+    int quo=0, rem=0;
+    public int helper(int n){
+        // Perform the division only if number is greater than 3
+        if(n>=3){
+            rem = n%3;
+            quo = n/3;
+            if(rem==2 || quo==2) return rem;
+            else if(quo>3) helper(quo);
+        }
+        // Assign the number in quotient if its less than 3
+        else quo=n;
+        // Check if remainder is 2, return that else return the quotient
+        return (rem==2) ? rem : quo;
+    }
+}
