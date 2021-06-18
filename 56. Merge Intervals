@@ -1,0 +1,30 @@
+/*
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+Example 1:
+
+Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+*/
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        // To sort the input array on start time of interval
+        Arrays.sort(intervals, Comparator.comparingDouble(o->o[0]));
+        LinkedList<int[]> result = new LinkedList<>();
+        
+        // Iterate over input array
+        for(int[] interval : intervals){
+            // If last stored interval end time is less than start time of current interval
+            // then store this current new interval in result
+            if(result.isEmpty() || result.getLast()[1]<interval[0])
+                result.add(interval);
+            // Else since end time of last stored interval overlaps with current start time
+            else
+                // merge the two intervals and store the greater end time between two
+                result.getLast()[1] = Math.max(result.getLast()[1], interval[1]);
+        } 
+        return result.toArray(new int[result.size()][]);
+    }
+}
