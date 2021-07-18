@@ -1,0 +1,29 @@
+/*
+Given an array nums, you are allowed to choose one element of nums and change it by any value in one move.
+
+Return the minimum difference between the largest and smallest value of nums after perfoming at most 3 moves.
+
+ 
+
+Example 1:
+
+Input: nums = [5,3,2,4]
+Output: 0
+Explanation: Change the array [5,3,2,4] to [2,2,2,2].
+The difference between the maximum and minimum is 2-2 = 0.
+*/
+
+class Solution {
+    public int minDifference(int[] nums) {
+        
+        int n = nums.length;
+        if(n<5) return 0;
+        
+        int ans=Integer.MAX_VALUE;
+        Arrays.sort(nums);
+        for(int i=0; i<4; i++){
+            ans = Math.min(ans, nums[n-4+i]-nums[i]);
+        }
+        return ans;
+    }
+}

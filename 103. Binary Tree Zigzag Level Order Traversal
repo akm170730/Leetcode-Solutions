@@ -1,0 +1,40 @@
+/*
+Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+
+Example 1:
+
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[20,9],[15,7]]
+*/
+
+class Solution {    
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        // Base case to check if input is null
+        if(root==null) return new ArrayList<List<Integer>>();
+        
+        List<List<Integer>> res = new ArrayList<>();
+        helper(res, 0, root);
+        return res;
+    }
+    
+    public void helper(List<List<Integer>> res, int height, TreeNode root){
+        // If the current height is greater than already traversed height of tree
+        // Then create a new level list and add val to this list
+        if(height >= res.size()){
+            List<Integer> newLevel = new LinkedList<>();
+            newLevel.add(root.val);
+            res.add(newLevel);
+        }
+        else{
+            // If the current height already exists in traversed tree
+            // then calculate the level by modulo 2 and append to existing list
+            // backwards or forwards based on level
+            if(height%2==0)
+                res.get(height).add(root.val);
+            else
+                res.get(height).add(0, root.val);   
+        }
+        if(root.left!=null) helper(res, height+1, root.left);
+        if(root.right!=null) helper(res, height+1, root.right);
+    }
+}
